@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Villaggio’s Pizzeria | Newberry, FL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ---------- GLOBAL STYLES ---------- */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fafafa;
+  color: #222;
+}
+
+nav {
+  background: #8b0000;
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+}
+
+section {
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+h1, h2 {
+  color: #8b0000;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+button {
+  padding: 10px 15px;
+  background: #8b0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#menu">Menu</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<header id="hero"></header>
+
+<section id="home">
+  <h1>Villaggio’s Pizzeria</h1>
+  <p>
+    Villaggio’s Pizzeria proudly serves authentic Italian-style pizza
+    made with fresh ingredients and traditional recipes in
+    Newberry, Florida.
+  </p>
+</section>
+
+<section id="menu">
+  <h2>Our Menu</h2>
+  <div id="menuList"></div>
+</section>
+
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery" id="galleryGrid"></div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Visit us in Newberry, Florida or reach out for takeout orders.</p>
+  <button onclick="sendMessage()">Send Message</button>
+</section>
+
+<footer>
+  © Villaggio’s Pizzeria — Newberry, FL
+</footer>
+
+<script>
+/* ---------- BACKEND DATA (SIMULATED) ---------- */
+
+// Toggle external images ON / OFF
+const USE_EXTERNAL_IMAGES = true;
+
+// Image sources (both routes)
+const imageSources = {
+  official: [
+    {
+      url: "https://villaggios-pizzeria.com/images/hero.jpg",
+      alt: "Villaggio’s Pizzeria storefront"
+    },
+    {
+      url: "https://villaggios-pizzeria.com/images/pizza.jpg",
+      alt: "Fresh pizza from Villaggio’s"
+    }
+  ],
+  external: [
+    {
+      url: "https://s3-media0.fl.yelpcdn.com/bphoto/example.jpg",
+      alt: "Villaggio’s pizza from Yelp"
+    },
+    {
+      url: "https://media-cdn.tripadvisor.com/media/photo-o/example.jpg",
+      alt: "Dining area from TripAdvisor"
+    }
+  ]
+};
+
+// Menu data
+const menuData = {
+  pizzas: [
+    { name: "Cheese Pizza", price: "$12.99" },
+    { name: "Pepperoni Pizza", price: "$14.99" },
+    { name: "Supreme Pizza", price: "$17.99" }
+  ],
+  sides: [
+    { name: "Garlic Knots", price: "$5.99" },
+    { name: "Caesar Salad", price: "$7.99" }
+  ]
+};
+
+/* ---------- RENDER FUNCTIONS ---------- */
+
+// Hero image
+const hero = document.getElementById("hero");
+const heroImg = document.createElement("img");
+heroImg.src = imageSources.official[0].url;
+heroImg.alt = imageSources.official[0].alt;
+hero.appendChild(heroImg);
+
+// Menu rendering
+const menuList = document.getElementById("menuList");
+[...menuData.pizzas, ...menuData.sides].forEach(item => {
+  const div = document.createElement("div");
+  div.className = "menu-item";
+  div.innerHTML = `<span>${item.name}</span><span>${item.price}</span>`;
+  menuList.appendChild(div);
+});
+
+// Gallery rendering (both routes)
+const galleryGrid = document.getElementById("galleryGrid");
+const galleryImages = USE_EXTERNAL_IMAGES
+  ? [...imageSources.official, ...imageSources.external]
+  : imageSources.official;
+
+galleryImages.forEach(imgData => {
+  const img = document.createElement("img");
+  img.src = imgData.url;
+  img.alt = imgData.alt;
+  galleryGrid.appendChild(img);
+});
+
+// Contact mock
+function sendMessage() {
+  alert("Message sent! (Demo)");
+}
+</script>
+
+</body>
+</html>
